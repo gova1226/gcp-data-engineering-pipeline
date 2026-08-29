@@ -4,56 +4,39 @@ An end-to-end data engineering pipeline built using Apache Airflow, Docker, Post
 
 The pipeline ingests e-commerce order data, performs data validation and transformation through multiple layers, loads the processed data into BigQuery, and creates analytics views for business reporting.
 
----
-
 ## Architecture
 
-```text
-                    ┌──────────────────────┐
-                    │   Source CSV Data    │
-                    │      /data            │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │    Apache Airflow    │
-                    │     Orchestration    │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-              ┌────────────────────────────────┐
-              │       BigQuery - Staging       │
-              │   ecommerce_staging            │
-              │                                │
-              │      staging_orders             │
-              └───────────────┬────────────────┘
-                              │
-                              ▼
-              ┌────────────────────────────────┐
-              │        BigQuery - Clean        │
-              │     ecommerce_clean             │
-              │                                │
-              │       clean_orders              │
-              └───────────────┬────────────────┘
-                              │
-                              ▼
-              ┌────────────────────────────────┐
-              │       BigQuery - Analytics     │
-              │     ecommerce_analytics         │
-              │                                │
-              │         fact_orders             │
-              └───────────────┬────────────────┘
-                              │
-                ┌─────────────┼─────────────┐
-                │             │             │
-                ▼             ▼             ▼
-          Monthly Sales   Customer      Product
-             View         Analytics     Analytics
-                │
-                ├──────────────┐
-                ▼              ▼
-             Payment        Status
-            Analytics      Analytics
+![E-Commerce Data Engineering Pipeline Architecture](screenshots/architecture.png)
+
+                 E-Commerce Source Data
+                         │
+                         ▼
+                Python Data Generation
+                         │
+                         ▼
+                    Apache Airflow
+                         │
+             ┌───────────┴───────────┐
+             ▼                       ▼
+       Data Validation         Data Transformation
+             │                       │
+             └───────────┬───────────┘
+                         ▼
+                    BigQuery
+                         │
+          ┌──────────────┼──────────────┐
+          ▼              ▼              ▼
+      STAGING          CLEAN           FACT
+          │              │              │
+          └──────────────┼──────────────┘
+                         ▼
+                Analytics Views
+          ┌────────┬────────┬────────┐
+          ▼        ▼        ▼        ▼
+       Monthly  Customer  Product  Payment
+                         │
+                         ▼
+                  Data Quality
 
 
 ## Technologies Used
