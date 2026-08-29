@@ -87,6 +87,69 @@ The pipeline was reconciled across the Fact table and all analytics views.
 
 All analytics layers reconcile with the Fact table totals.
 
+## Analytics Layer
+
+The Analytics layer provides business-ready BigQuery views for reporting and downstream analysis.
+
+### Monthly Sales Analytics
+
+Provides monthly performance metrics including:
+
+- Order count
+- Total quantity
+- Gross sales
+- Total discount
+- Net sales
+- Average order value
+
+### Customer Analytics
+
+Provides customer-level metrics including:
+
+- Order count
+- Total quantity
+- Gross spend
+- Total discount
+- Total spend
+- Average order value
+- First order date
+- Last order date
+
+### Product Analytics
+
+Provides product-level performance metrics including:
+
+- Order count
+- Total quantity
+- Gross sales
+- Total discount
+- Net sales
+- Average order value
+- Revenue per unit
+
+### Payment Analytics
+
+Provides payment-method performance including:
+
+- Order count
+- Total quantity
+- Gross sales
+- Total discount
+- Net sales
+- Average order value
+
+### Order Status Analytics
+
+Provides order-status distribution including:
+
+- Order count
+- Total quantity
+- Gross sales
+- Total discount
+- Net sales
+- Order percentage
+- Sales percentage
+
 ## Technologies Used
 
 | Technology | Purpose |
