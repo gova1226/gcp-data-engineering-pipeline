@@ -150,6 +150,287 @@ Provides order-status distribution including:
 - Order percentage
 - Sales percentage
 
+## Airflow Pipeline
+
+The pipeline is orchestrated using Apache Airflow and runs as a scheduled ETL workflow.
+
+### DAG: `ecommerce_data_pipeline`
+
+The DAG consists of 11 tasks covering the complete data engineering lifecycle:
+
+1. Generate source data
+2. Validate raw data
+3. Transform and clean data
+4. Load data into BigQuery
+5. Update the Fact table
+6. Run data-quality checks
+7. Create monthly sales analytics
+8. Create customer analytics
+9. Create product analytics
+10. Create payment analytics
+11. Create order-status analytics
+
+### Scheduling
+
+The pipeline is configured with:
+
+```text
+Schedule: @daily
+
+
+---
+
+# 2. Data Architecture
+
+```markdown
+## Data Architecture
+
+The project follows a layered data architecture:
+
+```text
+Source CSV
+    │
+    ▼
+Staging Layer
+    │
+    ▼
+Clean Layer
+    │
+    ▼
+Fact Table
+    │
+    ├── Monthly Sales Analytics
+    ├── Customer Analytics
+    ├── Product Analytics
+    ├── Payment Analytics
+    └── Order Status Analytics
+
+## Layers
+# Layer	Purpose
+Raw / Source	Original generated e-commerce order data
+Staging	Initial ingestion into BigQuery
+Clean	Validated and transformed order data
+Analytics	Business-ready Fact table and analytical views
+
+The architecture separates ingestion, transformation, validation, and analytical workloads to improve maintainability and scalability.
+
+
+---
+
+# 3. Technology Stack
+
+If you already have a **Technologies Used** section, don't create a duplicate. Instead, make sure it contains this:
+
+```markdown
+## Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| Python | Data generation, transformation, validation, and automation |
+| Apache Airflow | Workflow orchestration |
+| Docker | Containerized development environment |
+| Docker Compose | Multi-container orchestration |
+| PostgreSQL | Airflow metadata database |
+| Google BigQuery | Cloud data warehouse |
+| SQL | Data transformation and analytics |
+| PowerShell | Local environment and pipeline management |
+| Git | Version control |
+| GitHub | Source code hosting and portfolio |
+
+
+### Data Quality Rules
+
+The pipeline validates:
+
+- Customer ID format and validity
+- Product ID format and validity
+- Positive order quantities
+- Valid unit prices
+- Payment method values
+- Country values
+- Order status values
+- Gross amount calculations
+- Order-status derived flags
+- Duplicate order IDs
+- Cross-layer record and metric reconciliation
+
+These checks help ensure that invalid or inconsistent records do not propagate into the analytics layer.
+
+
+## BigQuery Data Model
+
+The BigQuery dataset is organized into separate logical layers:
+
+```text
+fourth-truck-506708-s5
+│
+├── ecommerce_staging
+│   └── staging_orders
+│
+├── ecommerce_clean
+│   └── clean_orders
+│
+└── ecommerce_analytics
+    ├── fact_orders
+    ├── v_monthly_sales
+    ├── v_customer_analytics
+    ├── v_product_analytics
+    ├── v_payment_analytics
+    └── v_status_analytics
+
+The fact_orders table acts as the central analytical fact table, while the views provide specialized business reporting perspectives.
+
+
+---
+
+# 6. Key Business Results
+
+This is useful for recruiters because it quickly shows that you actually analyzed the data.
+
+```markdown
+## Key Business Results
+
+Based on the processed dataset:
+
+- **116,221** total orders
+- **116,221** unique orders
+- **29,377** unique customers
+- **2,000** unique products
+- **349,278** total units sold
+- **164,660,809.80** total net sales
+
+### Top Country by Net Sales
+
+| Country | Orders | Net Sales |
+|---|---:|---:|
+| India | 40,655 | 57,650,909.43 |
+| United States | 28,959 | 40,742,258.43 |
+| United Kingdom | 13,904 | 19,654,589.61 |
+| Canada | 11,676 | 16,728,897.12 |
+| Germany | 11,751 | 16,691,501.02 |
+| Australia | 9,130 | 12,991,040.49 |
+
+India generated the highest net sales in the processed dataset.
+
+## Pipeline Validation Summary
+
+The final pipeline execution was successfully validated through both Airflow and BigQuery.
+
+### Final Validation
+
+```text
+Airflow Tasks              : 11 / 11 SUCCESS
+Total Orders               : 116,221
+Unique Orders              : 116,221
+Total Quantity             : 349,278
+Total Net Sales            : 164,660,809.80
+Customer Count             : 29,377
+Product Count              : 2,000
+Gross Calculation Errors   : 0
+Quantity Validation Errors : 0
+Customer ID Errors         : 0
+Product ID Errors          : 0
+Status Flag Errors         : 0
+
+
+---
+
+# 8. Project Structure
+
+```markdown
+## Project Structure
+
+```text
+gcp-data-engineering-pipeline/
+│
+├── dags/
+│   └── ecommerce_pipeline.py
+│
+├── data/
+│   ├── raw/
+│   ├── processed/
+│   └── rejected/
+│
+├── scripts/
+│   ├── generate_data.py
+│   ├── load_to_bigquery.py
+│   ├── transform_data.py
+│   └── validate_data.py
+│
+├── sql/
+│   ├── analytics_customer.sql
+│   ├── analytics_monthly_sales.sql
+│   ├── analytics_payment.sql
+│   ├── analytics_product.sql
+│   ├── analytics_status.sql
+│   ├── data_quality.sql
+│   └── update_fact_table.sql
+│
+├── screenshots/
+│   └── architecture.png
+│
+├── docker-compose.yaml
+├── requirements.txt
+├── README.md
+└── .gitignore
+
+
+---
+
+# 9. How to Run
+
+This is especially important for a portfolio project because someone should be able to reproduce it.
+
+```markdown
+## How to Run
+
+### Prerequisites
+
+- Docker Desktop
+- Git
+- Google Cloud account
+- Google Cloud project with BigQuery enabled
+- Appropriate Google Cloud authentication
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/gova1226/gcp-data-engineering-pipeline.git
+cd gcp-data-engineering-pipeline
+
+
+---
+
+# 10. Future Improvements
+
+This makes the project look intentionally extensible rather than "finished and abandoned."
+
+```markdown
+## Future Improvements
+
+Potential future enhancements include:
+
+- Add incremental data loading instead of full refresh processing
+- Add partitioning and clustering to BigQuery tables
+- Add automated unit tests for transformation logic
+- Add Airflow failure notifications
+- Add CI/CD using GitHub Actions
+- Add a Looker Studio or Power BI dashboard
+- Add monitoring and pipeline execution metrics
+- Add schema validation for incoming source files
+- Add infrastructure-as-code using Terraform
+
+## Project Status
+
+**Status: Completed**
+
+The project successfully demonstrates an end-to-end cloud data engineering workflow covering:
+
+**Data Generation → Ingestion → Validation → Transformation → BigQuery → Analytics → Airflow Orchestration**
+
+The pipeline has been executed successfully and the resulting data has been validated through automated quality checks and cross-layer reconciliation.
+
+
 ## Technologies Used
 
 | Technology | Purpose |
