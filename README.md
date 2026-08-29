@@ -53,6 +53,40 @@ The pipeline ingests e-commerce order data, performs data validation and transfo
 - Integrated Google Cloud BigQuery as the cloud data warehouse.
 - Validated the final pipeline with all **11 Airflow tasks completing successfully**.
 
+## Data Quality & Validation
+
+The pipeline includes automated data-quality checks across the ingestion, transformation, and analytics layers.
+
+### Validation Results
+
+| Check | Result |
+|---|---:|
+| Total rows processed | 116,221 |
+| Invalid customer IDs | 0 |
+| Invalid product IDs | 0 |
+| Invalid quantity | 0 |
+| Invalid unit price | 0 |
+| Gross calculation mismatches | 0 |
+| Delivered flag errors | 0 |
+| Cancelled flag errors | 0 |
+| Returned flag errors | 0 |
+| Placed/Shipped flag errors | 0 |
+
+### Cross-Layer Reconciliation
+
+The pipeline was reconciled across the Fact table and all analytics views.
+
+| Layer / View | Orders | Quantity | Net Sales |
+|---|---:|---:|---:|
+| Fact | 116,221 | 349,278 | 164,660,809.80 |
+| Customer | 116,221 | 349,278 | 164,660,809.80 |
+| Product | 116,221 | 349,278 | 164,660,809.80 |
+| Payment | 116,221 | 349,278 | 164,660,809.80 |
+| Status | 116,221 | 349,278 | 164,660,809.80 |
+| Monthly | 116,221 | 349,278 | 164,660,809.80 |
+
+All analytics layers reconcile with the Fact table totals.
+
 ## Technologies Used
 
 | Technology | Purpose |
