@@ -1,0 +1,15 @@
+E-COMMERCE DATASET GENERATION SUMMARY
+==================================================
+Total records: 122,000
+Total columns: 10
+
+Intentional data-quality issues:
+- Missing order_id: 500
+- Missing customer_id: 400
+- Invalid quantity: 300
+- Invalid unit_price: 200
+- Invalid order_status: 250
+- Invalid order_date: 150
+- Missing payment_method: 200
+- Missing country: 150
+- Duplicate rows added: 2,000
