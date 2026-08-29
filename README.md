@@ -38,6 +38,20 @@ The pipeline ingests e-commerce order data, performs data validation and transfo
                          ▼
                   Data Quality
 
+## Project Highlights
+
+- Built an end-to-end e-commerce data engineering pipeline using Python, Apache Airflow, Docker, PostgreSQL, and Google BigQuery.
+- Designed a layered data architecture with Staging, Clean, and Analytics layers.
+- Processed **116,221 orders** with **116,221 unique orders**.
+- Processed **29,377 unique customers** and **2,000 unique products**.
+- Generated **349,278 total units** and **164,660,809.80 total net sales**.
+- Implemented automated data-quality validation for customer, product, quantity, pricing, payment, country, and order-status data.
+- Implemented cross-layer reconciliation between Staging, Clean, Fact, and Analytics views.
+- Created dedicated BigQuery analytics views for **monthly sales, customer, product, payment, and order-status analysis**.
+- Built an **11-task Apache Airflow DAG** configured for **daily execution (`@daily`)**.
+- Containerized the complete local orchestration environment using Docker Compose.
+- Integrated Google Cloud BigQuery as the cloud data warehouse.
+- Validated the final pipeline with all **11 Airflow tasks completing successfully**.
 
 ## Technologies Used
 
